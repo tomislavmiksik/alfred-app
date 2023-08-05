@@ -55,7 +55,6 @@ dependencies:
   sliver_tools: ^0.2.8
   google_fonts: ^4.0.1
   url_launcher: ^6.1.8
-  sentry_flutter: ^7.9.0
   cached_network_image: ^3.2.3
   extended_image: ^8.0.2
   infinite_scroll_pagination: ^3.2.0
