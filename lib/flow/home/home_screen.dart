@@ -17,25 +17,26 @@ class HomeScreen extends HookConsumerWidget {
       body: AutoTabsScaffold(
         animationCurve: Curves.easeInOut,
         routes: const [
+          TasksRoute(),
           ProfileRoute(),
         ],
-        bottomNavigationBuilder: (context, _) {
+        bottomNavigationBuilder: (context, tabsRouter) {
           return AnimatedBottomNavigationBar(
-            blurEffect: true,
+            backgroundColor: AppColors.colorBackgroundPopUp,
             gapLocation: GapLocation.none,
+            notchAndCornersAnimation: null,
             icons: const [
+              Icons.task_alt_sharp,
               Icons.person_2_outlined,
-              Icons.settings_outlined,
-              Icons.home_outlined,
-              Icons.person_outline
             ],
             activeColor: AppColors.colorPrimary,
-            activeIndex: activeIndex.value,
+            inactiveColor: Colors.white,
+            splashColor: Colors.transparent,
+            splashRadius: 0,
+            activeIndex: tabsRouter.activeIndex,
             onTap: (index) {
               activeIndex.value = index;
-              // context.router.push(
-              //   const ProfileRoute(),
-              // );
+              tabsRouter.setActiveIndex(index);
             },
           );
         },

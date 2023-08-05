@@ -1,6 +1,7 @@
 import 'package:alfred_app/flow/home/home_screen.dart';
 import 'package:alfred_app/flow/login/login_screen.dart';
 import 'package:alfred_app/flow/profile/profile_screen.dart';
+import 'package:alfred_app/flow/tasks/tasks_screen.dart';
 import 'package:alfred_app/navigation/guards/auth_guard.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -24,7 +25,11 @@ class AppRouter extends _$AppRouter {
           AutoRoute(
             page: ProfileRoute.page,
             path: 'profile',
-          )
+          ),
+          AutoRoute(
+            page: TasksRoute.page,
+            path: 'tasks',
+          ),
         ]),
         AutoRoute(
           path: '/login',

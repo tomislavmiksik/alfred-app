@@ -19,6 +19,9 @@ class AuthAPI extends __AuthAPI {
     required String email,
     required String password,
   }) {
-    return _login({'identifier': email, 'password': password});
+    return _login({
+      'identifier': email,
+      'password': password,
+    });
   }
 }

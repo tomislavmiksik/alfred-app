@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#004225</color>
+    <color name="colorPrimaryBackground">#202428</color>
+    <color name="colorBackgroundPopUp">#151718</color>
 </resources>

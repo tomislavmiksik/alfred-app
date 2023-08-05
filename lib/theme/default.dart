@@ -87,7 +87,7 @@ final _defaultTheme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     labelStyle: _bodyLarge.copyWith(),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: const OutlineInputBorder(
       borderSide: BorderSide(
           // color: AppColors.gray500.withOpacity(0.32),
           ),
@@ -147,23 +147,26 @@ final _defaultTheme = ThemeData(
     shadowColor: Colors.transparent,
     selectedShadowColor: Colors.transparent,
   ),
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: AppColors.colorPrimaryBackground,
 );
 
 final _bodyLarge = GoogleFonts.lato(
   fontSize: 16,
   height: 24 / 16,
+  color: Colors.white,
   fontWeight: FontWeight.w400,
 );
 
 final _bodyMedium = GoogleFonts.lato(
   fontSize: 14,
   height: 22 / 14,
+  color: Colors.white,
   fontWeight: FontWeight.w400,
 );
 
 final _bodySmall = GoogleFonts.lato(
   fontSize: 12,
   height: 18 / 12,
+  color: Colors.white,
   fontWeight: FontWeight.w400,
 );
