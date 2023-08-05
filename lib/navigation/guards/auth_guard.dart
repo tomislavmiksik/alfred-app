@@ -1,6 +1,7 @@
-import 'package:alfred_app/navigation/app_router.gr.dart';
 import 'package:alfred_app/repository/session_repository.dart';
 import 'package:auto_route/auto_route.dart';
+
+import '../app_router.dart';
 
 class AuthGuard extends AutoRouteGuard {
   final SessionRepository _sessionRepository;
@@ -8,7 +9,13 @@ class AuthGuard extends AutoRouteGuard {
   AuthGuard(this._sessionRepository);
 
   @override
-  void onNavigation(NavigationResolver resolver, StackRouter router) {
+  void onNavigation(NavigationResolver resolver, StackRouter router) async {
+    final session = await _sessionRepository.getCurrentSession();
+
+    if (session != null) {
+      resolver.next(true);
+      return;
+    }
     router.replaceAll([const LoginRoute()]);
   }
 }

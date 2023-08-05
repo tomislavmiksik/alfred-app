@@ -1,3 +1,5 @@
+import 'package:alfred_app/domain/data/session.dart';
+import 'package:alfred_app/domain/data/user.dart';
 import 'package:alfred_app/providers/app_theme_provider.dart';
 import 'package:alfred_app/providers/navigation_providers.dart';
 import 'package:alfred_app/util/env.dart';
@@ -16,6 +18,9 @@ void main() async {
   };
   await Env.load();
   await Hive.initFlutter();
+  Hive.registerAdapter(SessionAdapter());
+  Hive.registerAdapter(UserAdapter());
+
   runApp(const ProviderScope(child: App()));
 }
 

@@ -6,4 +6,8 @@ class Env {
   }
 
   static String get apiUrl => dotenv.env['API_URL']!;
+
+  static String get testEmail => dotenv.env['TEST_EMAIL'] ?? '';
+
+  static String get testPassword => dotenv.env['TEST_PASSWORD'] ?? '';
 }

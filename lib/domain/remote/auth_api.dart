@@ -1,3 +1,4 @@
+import 'package:alfred_app/domain/data/session.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 
@@ -7,15 +8,14 @@ part 'auth_api.g.dart';
 abstract class _AuthAPI {
   factory _AuthAPI(Dio dio) = __AuthAPI;
 
-  //todo: ovo je samo za testiranje, makni
   @POST("/auth/local")
-  Future<Map<String, String>> _login(@Body() Map<String, dynamic> body);
+  Future<Session> _login(@Body() Map<String, dynamic> body);
 }
 
 class AuthAPI extends __AuthAPI {
   AuthAPI(Dio dio) : super(dio);
 
-  Future<Map<String, String>> login({
+  Future<Session> login({
     required String email,
     required String password,
   }) {

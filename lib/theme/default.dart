@@ -1,4 +1,3 @@
-
 import 'package:alfred_app/generated/colors.gen.dart';
 import 'package:alfred_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ class DefaultAppTheme extends AppTheme {
   ThemeData data = _defaultTheme;
 
   final ButtonStyle _iconButtonStyle = ElevatedButton.styleFrom(
-    // backgroundColor: AppColors.primary,
+    backgroundColor: AppColors.colorPrimary,
     foregroundColor: Colors.white,
     shape: const CircleBorder(),
     minimumSize: const Size.square(40),
@@ -23,14 +22,14 @@ class DefaultAppTheme extends AppTheme {
 
   @override
   ButtonStyle get secondaryIconButtonStyle => _iconButtonStyle.copyWith(
-    // backgroundColor: const MaterialStatePropertyAll(AppColors.gray300),
-    // foregroundColor: const MaterialStatePropertyAll(AppColors.primary),
-  );
+      // backgroundColor: const MaterialStatePropertyAll(Colors.black26),
+      // foregroundColor: const MaterialStatePropertyAll(AppColors.colorPrimary),
+      );
 }
 
 final _defaultTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(
-    // primary: AppColors.primary,
+    primary: AppColors.colorPrimary,
     // error: AppColors.error,
     onPrimary: Colors.white,
   ),
@@ -90,12 +89,12 @@ final _defaultTheme = ThemeData(
     labelStyle: _bodyLarge.copyWith(),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
-        // color: AppColors.gray500.withOpacity(0.32),
-      ),
+          // color: AppColors.gray500.withOpacity(0.32),
+          ),
     ),
     focusedBorder: const OutlineInputBorder(
-      // borderSide: BorderSide(color: AppColors.gray800),
-    ),
+        // borderSide: BorderSide(color: AppColors.gray800),
+        ),
     border: const OutlineInputBorder(),
     errorStyle: _bodySmall,
     // hintStyle: _bodyMedium.copyWith(color: AppColors.gray600),
