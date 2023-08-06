@@ -28,6 +28,15 @@ class DefaultAppTheme extends AppTheme {
 }
 
 final _defaultTheme = ThemeData(
+  appBarTheme: const AppBarTheme(
+    backgroundColor: AppColors.colorBackgroundPopUp,
+    shadowColor: Colors.transparent,
+    titleTextStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+    ),
+  ),
   colorScheme: ColorScheme.fromSwatch().copyWith(
     primary: AppColors.colorPrimary,
     // error: AppColors.error,
@@ -38,41 +47,49 @@ final _defaultTheme = ThemeData(
       displayLarge: GoogleFonts.lato(
         fontSize: 32,
         height: 40 / 32,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       ),
       displayMedium: GoogleFonts.lato(
         fontSize: 26,
         height: 34 / 26,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       ),
       displaySmall: GoogleFonts.lato(
         fontSize: 22,
         height: 31 / 22,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       ),
       headlineMedium: GoogleFonts.lato(
         fontSize: 20,
         height: 28 / 29,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       ),
       headlineSmall: GoogleFonts.lato(
         fontSize: 18,
         height: 28 / 18,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       ),
       titleLarge: GoogleFonts.lato(
         fontSize: 16,
         height: 24 / 16,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       ),
       titleMedium: GoogleFonts.lato(
         fontSize: 16,
         height: 24 / 16,
+        color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
       titleSmall: GoogleFonts.lato(
         fontSize: 14,
         height: 22 / 14,
+        color: Colors.white,
         fontWeight: FontWeight.w600,
       ),
       bodyLarge: _bodyLarge,
@@ -81,6 +98,7 @@ final _defaultTheme = ThemeData(
       labelSmall: GoogleFonts.lato(
         fontSize: 12,
         height: 18 / 12,
+        color: Colors.white,
         fontWeight: FontWeight.w700,
       ),
     ),
@@ -117,7 +135,7 @@ final _defaultTheme = ThemeData(
     style: TextButton.styleFrom(
       textStyle: _bodyMedium.copyWith(
         fontWeight: FontWeight.w600,
-        // color: AppColors.info,
+        // color: Colors.white,
       ),
       // foregroundColor: AppColors.info,
       minimumSize: Size.zero,

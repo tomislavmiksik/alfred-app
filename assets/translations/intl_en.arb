@@ -1,3 +1,12 @@
 {
-  "homeScreenTitle": "Home"
+  "homeScreenTitle": "Home",
+  "addTask": "Add Task",
+  "addEvent": "Add Event",
+  "addJournalEntry": "Add Journal Entry",
+  "addTaskTitle": "Task title",
+  "addTaskCompleteBy": "Complete by",
+  "addTaskCreateNewTaskTitle": "Create New Task",
+  "deleteTaskConfirmation": "Are you sure you want to delete this item",
+  "cancel": "Cancel",
+  "delete": "Delete"
 }

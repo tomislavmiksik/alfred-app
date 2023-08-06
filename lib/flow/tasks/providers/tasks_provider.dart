@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:alfred_app/domain/data/task.dart';
 import 'package:alfred_app/providers/repository_providers.dart';
 import 'package:alfred_app/repository/tasks_repository.dart';
@@ -23,7 +21,34 @@ class TasksNotifier extends StateNotifier<AsyncValue<List<Task>>> {
 
   Future<void> fetchTasks() async {
     final tasks = await _tasksRepository.fetchTasks();
-    log(tasks.toString());
     state = AsyncData(tasks);
+  }
+
+  Future<void> createTask({
+    required String title,
+    required DateTime completeBy,
+  }) async {
+    final task = await _tasksRepository.createTask(
+      title: title,
+      completeBy: completeBy,
+    );
+
+    state = state.whenData((tasks) => [...tasks, task]);
+  }
+
+  Future<void> updateTask(Task task, bool isCompleted) async {
+    final updatedTask = await _tasksRepository.updateTask(task, isCompleted);
+    state = AsyncData(
+      state.valueOrNull!
+          .map((t) => t.id == updatedTask.id ? updatedTask : t)
+          .toList(),
+    );
+  }
+
+  Future<void> deleteTask(Task task) async {
+    await _tasksRepository.deleteTask(task);
+    state = AsyncData(
+      state.valueOrNull!.where((t) => t.id != task.id).toList(),
+    );
   }
 }

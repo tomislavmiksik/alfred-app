@@ -1,5 +1,7 @@
 import 'package:alfred_app/domain/data/session.dart';
+import 'package:alfred_app/domain/data/task.dart';
 import 'package:alfred_app/domain/data/user.dart';
+import 'package:alfred_app/generated/l10n.dart';
 import 'package:alfred_app/providers/app_theme_provider.dart';
 import 'package:alfred_app/providers/navigation_providers.dart';
 import 'package:alfred_app/util/env.dart';
@@ -7,6 +9,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 void main() async {
@@ -18,8 +21,10 @@ void main() async {
   };
   await Env.load();
   await Hive.initFlutter();
+  await initializeDateFormatting();
   Hive.registerAdapter(SessionAdapter());
   Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(TaskAdapter());
 
   runApp(const ProviderScope(child: App()));
 }
@@ -33,6 +38,8 @@ class App extends ConsumerWidget {
     final theme = ref.read(themeProvider);
 
     return MaterialApp.router(
+      localizationsDelegates: const [Translations.delegate],
+      supportedLocales: Translations.delegate.supportedLocales,
       routeInformationParser: appRouter.defaultRouteParser(),
       routerDelegate: AutoRouterDelegate(
         appRouter,

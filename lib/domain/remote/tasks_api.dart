@@ -32,22 +32,25 @@ class TasksAPI extends __TasksAPI {
     return remoteList.data as List<Task>;
   }
 
-  Future<Task> create(Task task) async {
+  Future<Task> create({
+    required String title,
+    required DateTime completeBy,
+  }) async {
     final body = {
       "data": {
-        "title": task.title,
-        "completed": task.completed,
-        "completeBy": task.completeBy.toIso8601String(),
+        "title": title,
+        "completed": false,
+        "completeBy": completeBy.toIso8601String(),
       }
     };
     return await createTask(body);
   }
 
-  Future<Task> update(Task task) async {
+  Future<Task> update(Task task, bool isCompleted) async {
     final body = {
       "data": {
         "title": task.title,
-        "completed": task.completed,
+        "completed": isCompleted,
         "completeBy": task.completeBy.toIso8601String(),
       }
     };
