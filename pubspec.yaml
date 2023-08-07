@@ -126,6 +126,8 @@ flutter:
 flutter_intl:
     enabled: true
     arb_dir: assets/translations
+    template_arb_file: assets/translations/intl_en.arb
+    output_dir: lib/generated/
     class_name: Translations
 
 flutter_gen:
