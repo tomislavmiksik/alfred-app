@@ -1,4 +1,5 @@
 import 'package:alfred_app/flow/tasks/widgets/add_task_dialog.dart';
+import 'package:alfred_app/generated/assets.gen.dart';
 import 'package:alfred_app/generated/colors.gen.dart';
 import 'package:alfred_app/hooks/translation_hook.dart';
 import 'package:alfred_app/navigation/app_router.dart';
@@ -29,8 +30,8 @@ class HomeScreen extends HookConsumerWidget {
           overlayColor: Colors.black12,
           animationCurve: Curves.easeInOut,
           childPadding: const EdgeInsets.all(8),
-          animatedIcon: AnimatedIcons.menu_close,
           spaceBetweenChildren: 8,
+          activeChild: const Icon(Icons.close),
           switchLabelPosition: true,
           children: [
             SpeedDialChild(
@@ -77,7 +78,13 @@ class HomeScreen extends HookConsumerWidget {
             )
           ],
           backgroundColor: AppColors.colorPrimary,
-          child: const Icon(Icons.add),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: Assets.svg.appIconSvg.svg(
+              width: 40,
+              height: 40,
+            ),
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         animationCurve: Curves.easeInOut,

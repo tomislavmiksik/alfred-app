@@ -114,6 +114,12 @@ flutter:
     - .env
     - assets/images/
     - assets/icons/
+    - assets/svg/
+
+  fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: fonts/CustomIcons.ttf
 
 flutter_intl:
     enabled: true
