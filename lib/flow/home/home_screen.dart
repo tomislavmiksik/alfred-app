@@ -3,6 +3,7 @@ import 'package:alfred_app/generated/assets.gen.dart';
 import 'package:alfred_app/generated/colors.gen.dart';
 import 'package:alfred_app/hooks/translation_hook.dart';
 import 'package:alfred_app/navigation/app_router.dart';
+import 'package:alfred_app/providers/session_provider.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,8 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = useTranslations();
+
+    final user = ref.watch(sessionNotifierProvider);
 
     return Scaffold(
       body: AutoTabsScaffold(

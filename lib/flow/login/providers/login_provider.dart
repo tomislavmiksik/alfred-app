@@ -17,4 +17,24 @@ class LoginProvider extends ChangeNotifier {
   Future<void> login(String email, String password) async {
     await _sessionRepository.login(email, password);
   }
+
+  Future<void> register({
+    required String email,
+    required String username,
+    required String password,
+    required String firstName,
+    required String lastName,
+  }) async {
+    await _sessionRepository.register(
+      email: email,
+      username: username,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+    );
+  }
+
+  Future<void> logout() async {
+    await _sessionRepository.logout();
+  }
 }

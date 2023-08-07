@@ -16,7 +16,31 @@ class SessionRepository {
     await _sessionStore.setCurrentSession(res);
   }
 
+  Future<void> register({
+    required String email,
+    required String username,
+    required String password,
+    required String firstName,
+    required String lastName,
+  }) async {
+    final res = await _authAPI.register(
+      email: email,
+      username: username,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+    );
+
+    await _sessionStore.setCurrentSession(res);
+  }
+
+  Future<void> logout() async {
+    await _sessionStore.clearCurrentSession();
+  }
+
   Future<Session?> getCurrentSession() async {
-    return await _sessionStore.getCurrentSession();
+    final user = await _authAPI.getCurrentUser();
+
+    return await _sessionStore.updateCurrentSession(user);
   }
 }

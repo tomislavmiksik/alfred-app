@@ -1,4 +1,5 @@
 import 'package:alfred_app/domain/data/session.dart';
+import 'package:alfred_app/domain/data/user.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 
@@ -10,6 +11,12 @@ abstract class _AuthAPI {
 
   @POST("/auth/local")
   Future<Session> _login(@Body() Map<String, dynamic> body);
+
+  @POST("/auth/local/register")
+  Future<Session> _register(@Body() Map<String, dynamic> body);
+
+  @GET("/users/me")
+  Future<User> _getCurrentUser();
 }
 
 class AuthAPI extends __AuthAPI {
@@ -23,5 +30,25 @@ class AuthAPI extends __AuthAPI {
       'identifier': email,
       'password': password,
     });
+  }
+
+  Future<Session> register({
+    required String email,
+    required String password,
+    required String username,
+    required String firstName,
+    required String lastName,
+  }) {
+    return _register({
+      'email': email,
+      'password': password,
+      'username': username,
+      'firstName': firstName,
+      'lastName': lastName,
+    });
+  }
+
+  Future<User> getCurrentUser() {
+    return _getCurrentUser();
   }
 }

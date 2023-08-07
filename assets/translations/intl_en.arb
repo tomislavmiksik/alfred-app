@@ -8,5 +8,18 @@
   "addTaskCreateNewTaskTitle": "Create New Task",
   "deleteTaskConfirmation": "Are you sure you want to delete this item",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "tasksScreenTitle": "Tasks",
+  "profileScreenTitle": "Profile",
+  "email": "Email",
+  "password": "Password",
+  "welcomeToAlfred": "Welcome to Alfred",
+  "registerButtonPartOne": "Don't have an account yet? ",
+  "registerButtonPartTwo": "Join now!",
+  "registerScreenTitle": "Register",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "username": "Username",
+  "register": "Register",
+  "login": "Login"
 }

@@ -1,10 +1,13 @@
+import 'package:alfred_app/common/loading_dialog.dart';
 import 'package:alfred_app/flow/login/providers/login_provider.dart';
+import 'package:alfred_app/generated/colors.gen.dart';
+import 'package:alfred_app/hooks/async_callback.dart';
 import 'package:alfred_app/hooks/form_hook.dart';
+import 'package:alfred_app/hooks/translation_hook.dart';
 import 'package:alfred_app/navigation/app_router.dart';
 import 'package:alfred_app/util/env.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -15,13 +18,7 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final handleLogin = useCallback(
-      (String email, String password) async {
-        await ref.read(loginProvider).login(email, password);
-        AutoRouter.of(context).replaceAll([const HomeRoute()]);
-      },
-      [],
-    );
+    final t = useTranslations();
 
     final form = useForm(
       {
@@ -36,32 +33,121 @@ class LoginScreen extends HookConsumerWidget {
       },
     );
 
-    return SafeArea(
-      child: Scaffold(
-        body: ReactiveForm(
-          formGroup: form,
-          child: CustomScrollView(
+    final handleLogin = useAsyncCallback(
+      () async {
+        await ref.read(loginProvider.notifier).login(
+              form.control('email').value,
+              form.control('password').value,
+            );
+      },
+      keys: [form],
+      onLoading: () => LoadingDialog.show(),
+      onDone: () {
+        LoadingDialog.dismiss();
+        return context.router.replaceAll([const HomeRoute()]);
+      },
+    );
+
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.colorPrimary,
+        onPressed: handleLogin,
+        icon: const Icon(Icons.login),
+        label: Text(t.login),
+      ),
+      body: ReactiveForm(
+        formGroup: form,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Text(
+              t.welcomeToAlfred,
+              style: const TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            shape: const Border(
+              bottom: BorderSide(
+                color: AppColors.colorPrimary,
+                width: 1,
+              ),
+            ),
+          ),
+          body: CustomScrollView(
             slivers: [
               SliverPadding(
                 padding: const EdgeInsets.all(16),
                 sliver: MultiSliver(
                   children: [
-                    ReactiveTextField(
-                      formControlName: 'email',
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: ReactiveTextField(
+                        decoration: InputDecoration(
+                          labelText: t.email,
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.colorPrimary,
+                            ),
+                          ),
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.colorPrimary,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.colorPrimary,
+                            ),
+                          ),
+                        ),
+                        formControlName: 'email',
+                      ),
                     ),
-                    ReactiveTextField(
-                      formControlName: 'password',
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: ReactiveTextField(
+                        formControlName: 'password',
+                        decoration: InputDecoration(
+                          labelText: t.password,
+                          border: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.colorPrimary,
+                            ),
+                          ),
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.colorPrimary,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.colorPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (form.valid) {
-                          handleLogin(
-                            form.control('email').value,
-                            form.control('password').value,
-                          );
-                        }
-                      },
-                      child: const Text('Login'),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: TextButton(
+                        onPressed: () {
+                          AutoRouter.of(context).push(const RegisterRoute());
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: t.registerButtonPartOne,
+                            children: [
+                              TextSpan(
+                                text: t.registerButtonPartTwo,
+                                style: const TextStyle(
+                                  color: AppColors.colorPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -105,15 +105,21 @@ final _defaultTheme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     labelStyle: _bodyLarge.copyWith(),
-    enabledBorder: const OutlineInputBorder(
+    border: const UnderlineInputBorder(
       borderSide: BorderSide(
-          // color: AppColors.gray500.withOpacity(0.32),
-          ),
+        color: AppColors.colorPrimary,
+      ),
     ),
-    focusedBorder: const OutlineInputBorder(
-        // borderSide: BorderSide(color: AppColors.gray800),
-        ),
-    border: const OutlineInputBorder(),
+    enabledBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColors.colorPrimary,
+      ),
+    ),
+    focusedBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: AppColors.colorPrimary,
+      ),
+    ),
     errorStyle: _bodySmall,
     // hintStyle: _bodyMedium.copyWith(color: AppColors.gray600),
     contentPadding: const EdgeInsets.symmetric(

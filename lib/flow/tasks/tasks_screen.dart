@@ -1,6 +1,7 @@
 import 'package:alfred_app/flow/tasks/providers/tasks_provider.dart';
 import 'package:alfred_app/flow/tasks/widgets/task_list.dart';
 import 'package:alfred_app/generated/colors.gen.dart';
+import 'package:alfred_app/hooks/translation_hook.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,15 +14,16 @@ class TasksScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = useTranslations();
     final tasks = ref.watch(tasksNotifier);
     final completedTasks = useState(0);
     final totalTasks = useState(0);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text(
-          'Tasks',
-          style: TextStyle(
+        title: Text(
+          t.tasksScreenTitle,
+          style: const TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.normal,
           ),

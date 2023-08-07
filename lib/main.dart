@@ -1,3 +1,4 @@
+import 'package:alfred_app/common/loading_dialog.dart';
 import 'package:alfred_app/domain/data/session.dart';
 import 'package:alfred_app/domain/data/task.dart';
 import 'package:alfred_app/domain/data/user.dart';
@@ -38,6 +39,7 @@ class App extends ConsumerWidget {
     final theme = ref.read(themeProvider);
 
     return MaterialApp.router(
+      builder: LoadingDialog.init(),
       localizationsDelegates: const [Translations.delegate],
       supportedLocales: Translations.delegate.supportedLocales,
       routeInformationParser: appRouter.defaultRouteParser(),
