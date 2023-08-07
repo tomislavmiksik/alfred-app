@@ -18,7 +18,7 @@ class SessionNotifier extends StateNotifier<Session?> {
   }
 
   Future<void> _init() async {
-    final session = await _sessionRepository.getCurrentSession();
+    final session = await _sessionRepository.fetchUser();
     state = session;
   }
 

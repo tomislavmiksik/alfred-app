@@ -38,9 +38,13 @@ class SessionRepository {
     await _sessionStore.clearCurrentSession();
   }
 
-  Future<Session?> getCurrentSession() async {
+  Future<Session?> fetchUser() async {
     final user = await _authAPI.getCurrentUser();
 
     return await _sessionStore.updateCurrentSession(user);
+  }
+
+  Future<Session?> getCurrentSession() async {
+    return await _sessionStore.getCurrentSession();
   }
 }

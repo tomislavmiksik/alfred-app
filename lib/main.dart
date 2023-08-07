@@ -1,4 +1,5 @@
 import 'package:alfred_app/common/loading_dialog.dart';
+import 'package:alfred_app/domain/data/journal_entry.dart';
 import 'package:alfred_app/domain/data/session.dart';
 import 'package:alfred_app/domain/data/task.dart';
 import 'package:alfred_app/domain/data/user.dart';
@@ -23,11 +24,17 @@ void main() async {
   await Env.load();
   await Hive.initFlutter();
   await initializeDateFormatting();
+
+  registerHiveAdapters();
+
+  runApp(const ProviderScope(child: App()));
+}
+
+void registerHiveAdapters() {
   Hive.registerAdapter(SessionAdapter());
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(TaskAdapter());
-
-  runApp(const ProviderScope(child: App()));
+  Hive.registerAdapter(JournalEntryAdapter());
 }
 
 class App extends ConsumerWidget {

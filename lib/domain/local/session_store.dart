@@ -25,7 +25,7 @@ class SessionStore {
   }
 
   Future<void> clearCurrentSession() async {
-    final box = await Hive.openBox<Session>(_boxKey);
+    await Hive.openBox<Session>(_boxKey);
     await Hive.deleteFromDisk();
   }
 }

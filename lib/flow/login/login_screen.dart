@@ -42,6 +42,15 @@ class LoginScreen extends HookConsumerWidget {
       },
       keys: [form],
       onLoading: () => LoadingDialog.show(),
+      onError: (e) {
+        LoadingDialog.dismiss();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: AppColors.colorSemanticRed,
+          ),
+        );
+      },
       onDone: () {
         LoadingDialog.dismiss();
         return context.router.replaceAll([const HomeRoute()]);

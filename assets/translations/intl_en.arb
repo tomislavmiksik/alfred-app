@@ -21,5 +21,6 @@
   "lastName": "Last name",
   "username": "Username",
   "register": "Register",
-  "login": "Login"
+  "login": "Login",
+  "journal": "Journal"
 }
