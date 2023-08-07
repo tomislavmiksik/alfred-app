@@ -125,6 +125,7 @@ flutter_intl:
     enabled: true
     arb_dir: assets/translations
     class_name: Translations
+    generate: true
 
 flutter_gen:
     output: lib/generated/
