@@ -1,0 +1,4 @@
+enabled: true
+arb_dir: assets/translations
+output-dir: lib/generated/
+class_name: Translations
