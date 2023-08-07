@@ -117,11 +117,12 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/svg/
+    - assets/fonts/
 
   fonts:
     - family: CustomIcons
       fonts:
-        - asset: fonts/CustomIcons.ttf
+        - asset: assets/fonts/CustomIcons.ttf
 
 flutter_intl:
     enabled: true
