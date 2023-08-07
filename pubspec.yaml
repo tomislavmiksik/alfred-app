@@ -110,6 +110,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  generate: true
+
   assets:
     - .env
     - assets/images/
@@ -125,7 +127,6 @@ flutter_intl:
     enabled: true
     arb_dir: assets/translations
     class_name: Translations
-    generate: true
 
 flutter_gen:
     output: lib/generated/
