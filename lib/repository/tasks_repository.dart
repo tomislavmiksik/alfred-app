@@ -10,6 +10,10 @@ class TasksRepository {
 
   TasksRepository(this._tasksAPI, this._tasksStore);
 
+  Stream<List<Task>> watchTasks() {
+    return _tasksStore.watchTasks();
+  }
+
   Future<List<Task>> fetchTasks() async {
     final tasks = await _tasksAPI.fetchTasks();
     await _tasksStore.setTasks(tasks);
@@ -31,8 +35,11 @@ class TasksRepository {
   }
 
   Future<Task> updateTask(Task task, bool isCompleted) async {
+    await _tasksStore.updateTask(
+      task,
+      isCompleted,
+    );
     final updatedTask = await _tasksAPI.update(task, isCompleted);
-    await _tasksStore.updateTask(updatedTask, isCompleted);
     return updatedTask;
   }
 

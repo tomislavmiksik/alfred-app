@@ -41,9 +41,9 @@ class TasksStore {
     await box.put(_tasksKey, tasks);
   }
 
-  Stream<List<Task>> watchTasks() {
-    final box = Hive.box<List<Task>>(_boxKey);
-    return box.watch(key: _tasksKey).map(
+  Stream<List<Task>> watchTasks() async* {
+    final box = await Hive.openBox<List<Task>>(_boxKey);
+    yield* box.watch(key: _tasksKey).map(
       (event) {
         return event.value ?? [];
       },

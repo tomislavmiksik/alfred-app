@@ -17,64 +17,76 @@ class TaskList extends HookConsumerWidget {
     return Column(
       children: tasks
           .map(
-            (task) => ListTile(
-              onTap: () {
-                ref
-                    .read(tasksNotifier.notifier)
-                    .updateTask(task, !task.completed);
-              },
-              onLongPress: () {
-                AlertDialog.show(
-                  context,
-                  title: t.deleteTaskConfirmation,
-                  description: '',
-                  cancelText: t.cancel,
-                  okText: t.delete,
-                  onOkPressed: () {
-                    ref.read(tasksNotifier.notifier).deleteTask(task);
-                  },
-                );
-              },
-              title: Text(
-                task.title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+            (task) => Padding(
+              padding: const EdgeInsets.all(8),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: task.completed
+                      ? AppColors.colorPrimary
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-              subtitle: RichText(
-                text: TextSpan(
-                  text: 'Complete by: ',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+                child: ListTile(
+                  onTap: () {
+                    ref
+                        .read(tasksNotifier.notifier)
+                        .updateTask(task, !task.completed);
+                  },
+                  onLongPress: () {
+                    AlertDialog.show(
+                      context,
+                      title: t.deleteTaskConfirmation,
+                      description: '',
+                      cancelText: t.cancel,
+                      okText: t.delete,
+                      onOkPressed: () {
+                        ref.read(tasksNotifier.notifier).deleteTask(task);
+                      },
+                    );
+                  },
+                  title: Text(
+                    task.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
-                  children: [
-                    TextSpan(
-                      text: task.completeBy.asMmDdYyHHMm,
+                  subtitle: RichText(
+                    text: TextSpan(
+                      text: t.completeBy,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
                       ),
+                      children: [
+                        TextSpan(
+                          text: task.completeBy.asMmDdYyHHMm,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
+                  trailing: Checkbox(
+                    value: task.completed,
+                    side: const BorderSide(
+                      color: Colors.white,
+                    ),
+                    checkColor: Colors.white,
+                    fillColor:
+                        MaterialStateProperty.all(AppColors.colorPrimary),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    onChanged: (value) {},
+                  ),
+                  visualDensity: VisualDensity.compact,
                 ),
               ),
-              trailing: Checkbox(
-                value: task.completed,
-                side: const BorderSide(
-                  color: Colors.white,
-                ),
-                checkColor: Colors.white,
-                fillColor: MaterialStateProperty.all(AppColors.colorPrimary),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                onChanged: (value) {},
-              ),
-              visualDensity: VisualDensity.compact,
             ),
           )
           .toList(),

@@ -2,6 +2,7 @@ import 'package:alfred_app/domain/data/task.dart';
 import 'package:alfred_app/providers/repository_providers.dart';
 import 'package:alfred_app/repository/tasks_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rxdart/rxdart.dart';
 
 final tasksNotifier =
     StateNotifierProvider<TasksNotifier, AsyncValue<List<Task>>>(
@@ -12,11 +13,22 @@ final tasksNotifier =
 
 class TasksNotifier extends StateNotifier<AsyncValue<List<Task>>> {
   final TasksRepository _tasksRepository;
+  late final CompositeSubscription _compositeSubscription =
+      CompositeSubscription();
 
   TasksNotifier(
     this._tasksRepository,
   ) : super(const AsyncLoading()) {
-    fetchTasks();
+    _compositeSubscription.add(
+      _tasksRepository
+          .watchTasks()
+          .doOnListen(_tasksRepository.fetchTasks)
+          .listen(
+        (tasks) {
+          state = AsyncData(tasks);
+        },
+      ),
+    );
   }
 
   Future<void> fetchTasks() async {
