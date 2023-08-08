@@ -1,5 +1,6 @@
 import 'package:alfred_app/domain/data/journal_entry.dart';
 import 'package:alfred_app/domain/remote/responses/remote_list.dart';
+import 'package:alfred_app/extensions/date_time_extensions.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -18,7 +19,9 @@ abstract class _JournalAPI {
 
   @PUT('/journal-entries/{id}')
   Future<JournalEntry> updateJournalEntry(
-      @Path('id') int id, @Body() Map<String, dynamic> journalEntry);
+    @Path('id') int id,
+    @Body() Map<String, dynamic> journalEntry,
+  );
 
   @DELETE('/journal-entries/{id}')
   Future<void> deleteJournalEntry(@Path('id') int id);
@@ -41,17 +44,22 @@ class JournalAPI extends __JournalAPI {
       "data": {
         "title": title,
         "description": description,
-        "date": date.toIso8601String(),
+        "date": date.toIso8601UtcString(),
       }
     };
     return await createJournalEntry(body);
   }
 
-  Future<JournalEntry> update(JournalEntry journalEntry) async {
+  Future<JournalEntry> update({
+    required JournalEntry journalEntry,
+    required String title,
+    required String description,
+    required DateTime date,
+  }) async {
     final body = {
       "data": {
-        "title": journalEntry.title,
-        "description": journalEntry.description,
+        "title": title,
+        "description": description,
         "date": journalEntry.date.toIso8601String(),
       }
     };

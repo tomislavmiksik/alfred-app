@@ -12,6 +12,7 @@ class JournalEntry with _$JournalEntry {
     @HiveField(1) required String title,
     @HiveField(2) required String description,
     @HiveField(3) required DateTime date,
+    @HiveField(4) DateTime? createdAt,
   }) = _JournalEntry;
 
   factory JournalEntry.fromJson(Map<String, Object?> json) =>

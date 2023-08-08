@@ -22,6 +22,55 @@ class JournalNotifier extends StateNotifier<AsyncValue<List<JournalEntry>>> {
   Future<void> fetchJournalEntries() async {
     final entries = await _journalRepository.fetchJournalEntries();
     state = AsyncData(entries);
-    log("JournalNotifier: fetchJournalEntries completed: $entries");
+    log("JournalNotifier: fetchJournalEntries completed: ${entries.map((e) => e.createdAt)}");
+  }
+
+  Future<void> createJournalEntry({
+    required String title,
+    required String description,
+    required DateTime date,
+  }) async {
+    state = const AsyncLoading();
+    final entry = await _journalRepository.create(
+      title: title,
+      description: description,
+      date: date,
+    );
+    state = AsyncData([...?state.valueOrNull, entry]);
+    log("JournalNotifier: createJournalEntry completed: $entry");
+  }
+
+  Future<void> updateJournalEntry({
+    required JournalEntry journalEntry,
+    required String title,
+    required String description,
+    required DateTime date,
+  }) async {
+    state = const AsyncLoading();
+    final entry = await _journalRepository.update(
+      journalEntry: journalEntry,
+      title: title,
+      description: description,
+      date: date,
+    );
+
+    //todo: fixati jednog dana
+    await fetchJournalEntries();
+    state = AsyncData([...?state.valueOrNull, entry]);
+  }
+
+  Future<void> deleteJournalEntry({
+    required JournalEntry journalEntry,
+  }) async {
+    state = const AsyncLoading();
+    try {
+      await _journalRepository.deleteJournalEntry(
+        journalEntry: journalEntry,
+      );
+    } catch (e) {
+      // TODO
+    }
+    await fetchJournalEntries();
+    state = AsyncData([...?state.valueOrNull]);
   }
 }

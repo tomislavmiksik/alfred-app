@@ -10,11 +10,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class AddTaskDialog extends AppDialog {
-  const AddTaskDialog({
+  AddTaskDialog({
     super.key,
-  }) : super(
-          child: const _AddTaskDialogContent(),
-        );
+  }) : super(child: const _AddTaskDialogContent());
 }
 
 class _AddTaskDialogContent extends HookConsumerWidget {
@@ -50,19 +48,33 @@ class _AddTaskDialogContent extends HookConsumerWidget {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          label: Text(t.addTask),
-          backgroundColor: AppColors.colorPrimary,
-          onPressed: () async {
-            if (form.valid) {
-              await handleSubmit();
-              Navigator.of(context).pop();
-            } else {
-              form.markAllAsTouched();
-            }
-          },
-          icon: const Icon(Icons.add_task_outlined),
-        ),
+        persistentFooterButtons: [
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: TextButton.icon(
+              label: Text(
+                t.addTask,
+                style: const TextStyle(color: Colors.white),
+              ),
+              style: TextButton.styleFrom(
+                backgroundColor: AppColors.colorPrimary,
+              ),
+              onPressed: () async {
+                if (form.valid) {
+                  await handleSubmit();
+                  Navigator.of(context).pop();
+                } else {
+                  form.markAllAsTouched();
+                }
+              },
+              icon: const Icon(
+                Icons.add_task_outlined,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ),
+        ],
         backgroundColor: AppColors.colorBackgroundPopUp,
         body: ReactiveForm(
           formGroup: form,

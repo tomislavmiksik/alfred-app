@@ -6,7 +6,7 @@ const _fallbackSettings = RouteSettings(name: 'dialogs');
 abstract class AppDialog extends HookWidget {
   final Widget child;
 
-  const AppDialog({
+  AppDialog({
     Key? key,
     required this.child,
   }) : super(key: key);
