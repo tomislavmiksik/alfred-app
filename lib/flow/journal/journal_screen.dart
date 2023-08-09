@@ -48,12 +48,6 @@ class JournalScreen extends HookConsumerWidget {
               fontWeight: FontWeight.normal,
             ),
           ),
-          shape: const Border(
-            bottom: BorderSide(
-              color: AppColors.colorPrimary,
-              width: 1,
-            ),
-          ),
         ),
         body: RefreshIndicator(
           onRefresh: () async => await ref
@@ -151,10 +145,6 @@ class JournalScreen extends HookConsumerWidget {
                                 ],
                               ),
                             ),
-                            const Divider(
-                              color: Colors.white,
-                              height: 1,
-                            )
                           ],
                         ),
                       ),
