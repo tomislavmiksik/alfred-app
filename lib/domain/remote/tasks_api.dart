@@ -40,7 +40,7 @@ class TasksAPI extends __TasksAPI {
       "data": {
         "title": title,
         "completed": false,
-        "completeBy": completeBy.toIso8601String(),
+        "completeBy": completeBy.toUtc().toIso8601String(),
       }
     };
     return await createTask(body);
@@ -51,7 +51,7 @@ class TasksAPI extends __TasksAPI {
       "data": {
         "title": task.title,
         "completed": isCompleted,
-        "completeBy": task.completeBy.toIso8601String(),
+        "completeBy": task.completeBy.toUtc().toIso8601String(),
       }
     };
     return await updateTask(task.id, body);

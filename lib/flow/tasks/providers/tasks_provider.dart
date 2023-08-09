@@ -20,12 +20,13 @@ class TasksNotifier extends StateNotifier<AsyncValue<List<Task>>> {
     this._tasksRepository,
   ) : super(const AsyncLoading()) {
     _compositeSubscription.add(
-      _tasksRepository
-          .watchTasks()
-          .doOnListen(_tasksRepository.fetchTasks)
-          .listen(
+      _tasksRepository.watchTasks().doOnListen(fetchTasks).listen(
         (tasks) {
-          state = AsyncData(tasks);
+          state = AsyncData(
+            tasks
+                .where((element) => element.completeBy.isAfter(DateTime.now()))
+                .toList(),
+          );
         },
       ),
     );
@@ -40,12 +41,10 @@ class TasksNotifier extends StateNotifier<AsyncValue<List<Task>>> {
     required String title,
     required DateTime completeBy,
   }) async {
-    final task = await _tasksRepository.createTask(
+    await _tasksRepository.createTask(
       title: title,
       completeBy: completeBy,
     );
-
-    state = state.whenData((tasks) => [...tasks, task]);
   }
 
   Future<void> updateTask(Task task, bool isCompleted) async {
@@ -58,7 +57,11 @@ class TasksNotifier extends StateNotifier<AsyncValue<List<Task>>> {
   }
 
   Future<void> deleteTask(Task task) async {
-    await _tasksRepository.deleteTask(task);
+    try {
+      await _tasksRepository.deleteTask(task);
+    } on Exception catch (e) {
+      // TODO
+    }
     state = AsyncData(
       state.valueOrNull!.where((t) => t.id != task.id).toList(),
     );

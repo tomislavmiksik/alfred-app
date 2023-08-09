@@ -5,6 +5,7 @@ import 'package:alfred_app/domain/data/journal_entry.dart';
 import 'package:alfred_app/extensions/date_time_extensions.dart';
 import 'package:alfred_app/flow/journal/providers/journal_provider.dart';
 import 'package:alfred_app/generated/colors.gen.dart';
+import 'package:alfred_app/hooks/async_callback.dart';
 import 'package:alfred_app/hooks/form_hook.dart';
 import 'package:alfred_app/hooks/translation_hook.dart';
 import 'package:alfred_app/theme/default.dart';
@@ -75,32 +76,45 @@ class _AddJournalEntryDialogContent extends HookConsumerWidget {
       }
     }, [journalEntry, journalEntries, form.control('date').value, controller]);
 
-    final handleSubmit = useCallback(() async {
-      final date = form.control('date').value;
-      final description = form.control('description').value;
+    final handleSubmit = useAsyncCallback(
+      () async {
+        final date = form.control('date').value;
+        final description = form.control('description').value;
 
-      final isUpdate = journalEntry != null ||
-          journalEntries.firstWhereOrNull((e) => e.date.isInTheSameDay(date)) !=
-              null;
+        final isUpdate = journalEntry != null ||
+            journalEntries
+                    .firstWhereOrNull((e) => e.date.isInTheSameDay(date)) !=
+                null;
 
-      if (isUpdate) {
-        final entry = journalEntry ??
-            journalEntries.firstWhereOrNull((e) => e.date.isInTheSameDay(date));
+        if (isUpdate) {
+          final entry = journalEntry ??
+              journalEntries
+                  .firstWhereOrNull((e) => e.date.isInTheSameDay(date));
 
-        ref.read(journalNotifierProvider.notifier).updateJournalEntry(
-              journalEntry: entry!,
-              title: date.toString(),
-              date: DateTime(date.year, date.month, date.day, 1, 1, 1),
-              description: description,
-            );
-      } else {
-        ref.read(journalNotifierProvider.notifier).createJournalEntry(
-              title: date.toString(),
-              date: DateTime(date.year, date.month, date.day, 1, 1, 1),
-              description: description,
-            );
-      }
-    }, [form, journalEntry, journalEntries]);
+          ref.read(journalNotifierProvider.notifier).updateJournalEntry(
+                journalEntry: entry!,
+                title: date.toString(),
+                date: DateTime(date.year, date.month, date.day, 1, 1, 1),
+                description: description,
+              );
+        } else {
+          ref.read(journalNotifierProvider.notifier).createJournalEntry(
+                title: date.toString(),
+                date: DateTime(date.year, date.month, date.day, 1, 1, 1),
+                description: description,
+              );
+        }
+      },
+      onError: (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: AppColors.colorSemanticRed,
+          ),
+        );
+      },
+      keys: [form, journalEntry, journalEntries],
+    );
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),

@@ -30,14 +30,14 @@ class JournalNotifier extends StateNotifier<AsyncValue<List<JournalEntry>>> {
     required String description,
     required DateTime date,
   }) async {
-    state = const AsyncLoading();
+    log('JournalNotifier: createJournalEntry started ${state.valueOrNull?.length}');
     final entry = await _journalRepository.create(
       title: title,
       description: description,
       date: date,
     );
     state = AsyncData([...?state.valueOrNull, entry]);
-    log("JournalNotifier: createJournalEntry completed: $entry");
+    log("JournalNotifier: createJournalEntry completed: $entry ${state.valueOrNull?.length}");
   }
 
   Future<void> updateJournalEntry({
@@ -46,7 +46,6 @@ class JournalNotifier extends StateNotifier<AsyncValue<List<JournalEntry>>> {
     required String description,
     required DateTime date,
   }) async {
-    state = const AsyncLoading();
     final entry = await _journalRepository.update(
       journalEntry: journalEntry,
       title: title,

@@ -23,9 +23,10 @@
   "register": "Register",
   "login": "Login",
   "journal": "Journal",
-  "completeBy": "Complete by:",
+  "completeBy": "Complete by: ",
   "dateOfTheEntry": "Date of the entry",
   "createANewJournalEntry": "Create a new journal entry",
   "noEntryForThisDay": "No entry for this day",
-  "updateJournalEntry": "Update journal entry"
+  "updateJournalEntry": "Update journal entry",
+  "events": "Events"
 }

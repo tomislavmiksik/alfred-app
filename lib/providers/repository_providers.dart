@@ -1,5 +1,6 @@
 import 'package:alfred_app/providers/di/store_providers.dart';
 import 'package:alfred_app/providers/network_providers.dart';
+import 'package:alfred_app/repository/events_repository.dart';
 import 'package:alfred_app/repository/journal_repository.dart';
 import 'package:alfred_app/repository/session_repository.dart';
 import 'package:alfred_app/repository/tasks_repository.dart';
@@ -22,5 +23,11 @@ final tasksRepositoryProvider = Provider<TasksRepository>(
 final journalRepositoryProvider = Provider<JournalRepository>(
   (ref) => JournalRepository(
     ref.read(journalAPIProvider),
+  ),
+);
+
+final eventsRepositoryProvider = Provider<EventsRepository>(
+  (ref) => EventsRepository(
+    ref.read(eventsAPIProvider),
   ),
 );

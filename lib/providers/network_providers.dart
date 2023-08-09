@@ -1,5 +1,6 @@
 import 'package:alfred_app/domain/local/session_store.dart';
 import 'package:alfred_app/domain/remote/auth_api.dart';
+import 'package:alfred_app/domain/remote/events_api.dart';
 import 'package:alfred_app/domain/remote/interceptors/auth_interceptor.dart';
 import 'package:alfred_app/domain/remote/journal_api.dart';
 import 'package:alfred_app/domain/remote/tasks_api.dart';
@@ -31,12 +32,17 @@ final journalAPIProvider = Provider<JournalAPI>(
   (ref) => ref.read(_factoryProvider).journalAPI,
 );
 
+final eventsAPIProvider = Provider<EventsAPI>(
+  (ref) => ref.read(_factoryProvider).eventsAPI,
+);
+
 class APIFactory {
   final Dio dio;
 
   late final AuthAPI authAPI = AuthAPI(dio);
   late final TasksAPI tasksAPI = TasksAPI(dio);
   late final JournalAPI journalAPI = JournalAPI(dio);
+  late final EventsAPI eventsAPI = EventsAPI(dio);
 
   APIFactory._(this.dio);
 

@@ -16,8 +16,15 @@ class TasksRepository {
 
   Future<List<Task>> fetchTasks() async {
     final tasks = await _tasksAPI.fetchTasks();
-    await _tasksStore.setTasks(tasks);
-    return tasks
+    final updatedTasks = tasks
+        .map(
+          (element) => element.copyWith(
+            completeBy: element.completeBy.toLocal(),
+          ),
+        )
+        .toList();
+    await _tasksStore.setTasks(updatedTasks);
+    return updatedTasks
         .where((element) => element.completeBy.isAfter(DateTime.now()))
         .toList();
   }
@@ -30,8 +37,12 @@ class TasksRepository {
       title: title,
       completeBy: completeBy,
     );
-    await _tasksStore.addTask(createdTask);
-    return createdTask;
+
+    final createdTaskToLocal = createdTask.copyWith(
+      completeBy: createdTask.completeBy.toLocal(),
+    );
+    await _tasksStore.addTask(createdTaskToLocal);
+    return createdTaskToLocal;
   }
 
   Future<Task> updateTask(Task task, bool isCompleted) async {
@@ -40,7 +51,9 @@ class TasksRepository {
       isCompleted,
     );
     final updatedTask = await _tasksAPI.update(task, isCompleted);
-    return updatedTask;
+    return updatedTask.copyWith(
+      completeBy: updatedTask.completeBy.toLocal(),
+    );
   }
 
   Future<void> deleteTask(Task task) async {
