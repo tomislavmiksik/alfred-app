@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#077187</color>
-    <color name="colorPrimaryBackground">#0C0B0B</color>
+    <color name="colorPrimaryBackground">#202428</color>
     <color name="colorBackgroundPopUp">#151718</color>
     <color name="colorSemanticRed">#BC2C1A</color>
     <color name="colorSemanticGreen">#7DCE82</color>

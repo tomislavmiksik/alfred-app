@@ -96,7 +96,7 @@ class HomeScreen extends HookConsumerWidget {
         routes: const [
           JournalRoute(),
           TasksRoute(),
-          EventRoute(),
+          CalendarEventsRoute(),
           ProfileRoute(),
         ],
         bottomNavigationBuilder: (context, tabsRouter) {

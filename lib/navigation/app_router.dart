@@ -1,4 +1,4 @@
-import 'package:alfred_app/flow/events/event_screen.dart';
+import 'package:alfred_app/flow/calendar_events/calendar_events_screen.dart';
 import 'package:alfred_app/flow/home/home_screen.dart';
 import 'package:alfred_app/flow/journal/journal_screen.dart';
 import 'package:alfred_app/flow/login/login_screen.dart';
@@ -42,7 +42,7 @@ class AppRouter extends _$AppRouter {
               path: 'journal',
             ),
             AutoRoute(
-              page: EventRoute.page,
+              page: CalendarEventsRoute.page,
               path: 'events',
             )
           ],
