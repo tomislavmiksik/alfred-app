@@ -34,14 +34,14 @@ class EventsAPI extends __EventsAPI {
 
   Future<Event> create({
     required String title,
-    required String description,
+    String? description,
     required DateTime date,
   }) async {
     final body = {
       "data": {
         "title": title,
         "description": description,
-        "date": date.toUtc().toIso8601String(),
+        "eventDate": date.toUtc().toIso8601String(),
       }
     };
     return await createEvent(body);
@@ -52,7 +52,7 @@ class EventsAPI extends __EventsAPI {
       "data": {
         "title": event.title,
         "description": event.description,
-        "date": event.date.toUtc().toIso8601String(),
+        "date": event.eventDate.toUtc().toIso8601String(),
       }
     };
     return await updateEvent(event.id, body);

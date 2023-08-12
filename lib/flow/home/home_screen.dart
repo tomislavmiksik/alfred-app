@@ -1,3 +1,4 @@
+import 'package:alfred_app/flow/calendar_events/widgets/add_event_dialog.dart';
 import 'package:alfred_app/flow/journal/providers/journal_provider.dart';
 import 'package:alfred_app/flow/journal/widgets/add_journal_entry_dialog.dart';
 import 'package:alfred_app/flow/tasks/widgets/add_task_dialog.dart';
@@ -63,7 +64,7 @@ class HomeScreen extends HookConsumerWidget {
                 Icons.event,
                 color: Colors.white,
               ),
-              //onTap: () => context.router.push(const AddTaskRoute())
+              onTap: () => AddEventDialog().show(context),
             ),
             SpeedDialChild(
               labelBackgroundColor: AppColors.colorBackgroundPopUp,

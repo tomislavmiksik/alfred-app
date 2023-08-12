@@ -28,5 +28,12 @@
   "createANewJournalEntry": "Create a new journal entry",
   "noEntryForThisDay": "No entry for this day",
   "updateJournalEntry": "Update journal entry",
-  "events": "Events"
+  "events": "Events",
+  "eventTitle": "Event title",
+  "createEvent": "Create Event",
+  "date": "Date",
+  "time": "Time",
+  "upcomingEvents": "Upcoming events",
+  "editEvent": "Edit event",
+  "deleteEvent": "Delete event"
 }

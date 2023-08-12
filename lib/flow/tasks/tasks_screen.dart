@@ -40,18 +40,18 @@ class TasksScreen extends HookConsumerWidget {
           onRefresh: () async {
             await ref.read(tasksNotifier.notifier).fetchTasks();
           },
-          child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.all(16),
-                sliver: MultiSliver(
-                  children: [
-                    tasks.when(
-                      data: (tasks) {
-                        completedTasks.value =
-                            tasks.where((element) => element.completed).length;
-                        totalTasks.value = tasks.length;
-                        return Column(
+          child: tasks.when(
+            data: (tasks) {
+              completedTasks.value =
+                  tasks.where((element) => element.completed).length;
+              totalTasks.value = tasks.length;
+              return CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.all(16),
+                    sliver: MultiSliver(
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
@@ -80,22 +80,22 @@ class TasksScreen extends HookConsumerWidget {
                             ),
                             TaskList(tasks: tasks),
                           ],
-                        );
-                      },
-                      error: (_, __) => const Center(
-                        child: Text(
-                          'Error',
-                          style: TextStyle(fontSize: 26),
                         ),
-                      ),
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              );
+            },
+            error: (_, __) => const Center(
+              child: Text(
+                'Error',
+                style: TextStyle(fontSize: 26),
               ),
-            ],
+            ),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
         ),
       ),

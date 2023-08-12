@@ -9,12 +9,14 @@ class EventsRepository {
   Future<List<Event>> fetchEvents() async {
     final events = await _eventsAPI.fetchEvents();
 
-    return events.map((e) => e.copyWith(date: e.date.toLocal())).toList();
+    return events
+        .map((e) => e.copyWith(eventDate: e.eventDate.toLocal()))
+        .toList();
   }
 
   Future<Event> create({
     required String title,
-    required String description,
+    String? description,
     required DateTime date,
   }) async {
     final event = await _eventsAPI.create(
@@ -23,13 +25,13 @@ class EventsRepository {
       date: date,
     );
 
-    return event.copyWith(date: event.date.toLocal());
+    return event.copyWith(eventDate: event.eventDate.toLocal());
   }
 
   Future<Event> update(Event event) async {
     final updatedEvent = await _eventsAPI.update(event);
 
-    return updatedEvent.copyWith(date: updatedEvent.date.toLocal());
+    return updatedEvent.copyWith(eventDate: updatedEvent.eventDate.toLocal());
   }
 
   Future<void> delete(Event event) async {

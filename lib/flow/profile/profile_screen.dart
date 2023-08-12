@@ -14,7 +14,7 @@ class ProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = useTranslations();
-    final user = ref.watch(sessionNotifierProvider)?.user;
+    final session = ref.watch(sessionNotifierProvider);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -42,46 +42,60 @@ class ProfileScreen extends HookConsumerWidget {
             ),
           ],
         ),
-        body: CustomScrollView(
-          slivers: [
-            MultiSliver(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.colorPrimary,
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: const Icon(
-                    Icons.person,
-                    size: 128,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${user?.firstName ?? 'Tomislav'} ${user?.lastName ?? 'Miksik'}',
-                      style: const TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
+        body: session.when(
+          data: (session) {
+            final user = session?.user;
+            return CustomScrollView(
+              slivers: [
+                MultiSliver(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.colorPrimary,
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: const Icon(
+                        Icons.person,
+                        size: 128,
+                        color: Colors.white,
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      user?.email ?? '',
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${user?.firstName ?? ''} ${user?.lastName ?? ''}',
+                          style: const TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          user?.email ?? '',
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
+            );
+          },
+          error: (_, __) => const Center(
+            child: Text(
+              'Error',
+              style: TextStyle(fontSize: 26),
             ),
-          ],
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       ),
     );

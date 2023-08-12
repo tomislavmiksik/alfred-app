@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:alfred_app/domain/data/event.dart';
 import 'package:alfred_app/providers/repository_providers.dart';
 import 'package:alfred_app/repository/events_repository.dart';
@@ -14,21 +16,22 @@ class EventsNotifier extends StateNotifier<AsyncValue<List<Event>>> {
   final EventsRepository _eventsRepository;
 
   EventsNotifier(this._eventsRepository) : super(const AsyncValue.loading()) {
-    _fetchEvents();
+    fetchEvents();
   }
 
-  Future<void> _fetchEvents() async {
+  Future<void> fetchEvents() async {
     state = const AsyncValue.loading();
 
     try {
       final events = await _eventsRepository.fetchEvents();
       state = AsyncValue.data(events);
+      log("EventsNotifier: fetchEvents completed: ${events.map((e) => e.eventDate)}");
     } catch (e) {}
   }
 
   Future<void> create({
     required String title,
-    required String description,
+    String? description,
     required DateTime date,
   }) async {
     final event = await _eventsRepository.create(
@@ -45,15 +48,21 @@ class EventsNotifier extends StateNotifier<AsyncValue<List<Event>>> {
   Future<void> update(Event event) async {
     final updatedEvent = await _eventsRepository.update(event);
 
-    state.whenData((events) {
-      state = AsyncValue.data(events
-          .map((e) => e.id == updatedEvent.id ? updatedEvent : e)
-          .toList());
-    });
+    state.whenData(
+      (events) {
+        state = AsyncValue.data(events
+            .map((e) => e.id == updatedEvent.id ? updatedEvent : e)
+            .toList());
+      },
+    );
   }
 
   Future<void> delete(Event event) async {
-    await _eventsRepository.delete(event);
+    try {
+      await _eventsRepository.delete(event);
+    } catch (e) {
+      log("EventsNotifier: delete failed: $e");
+    }
 
     state.whenData((events) {
       state = AsyncValue.data(events.where((e) => e.id != event.id).toList());

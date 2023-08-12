@@ -29,7 +29,6 @@ class AlertDialog extends HookWidget {
     required Function() onOkPressed,
   }) async {
     await showDialog(
-      useRootNavigator: true,
       routeSettings: _routeSettings,
       context: context,
       barrierColor: Colors.black.withOpacity(0.85),

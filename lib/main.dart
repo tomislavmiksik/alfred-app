@@ -1,4 +1,5 @@
 import 'package:alfred_app/common/loading_dialog.dart';
+import 'package:alfred_app/domain/data/event.dart';
 import 'package:alfred_app/domain/data/journal_entry.dart';
 import 'package:alfred_app/domain/data/session.dart';
 import 'package:alfred_app/domain/data/task.dart';
@@ -35,6 +36,7 @@ void registerHiveAdapters() {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(TaskAdapter());
   Hive.registerAdapter(JournalEntryAdapter());
+  Hive.registerAdapter(EventAdapter());
 }
 
 class App extends ConsumerWidget {
