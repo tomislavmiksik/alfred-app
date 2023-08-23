@@ -7,7 +7,9 @@ import 'package:alfred_app/hooks/translation_hook.dart';
 import 'package:alfred_app/navigation/app_router.dart';
 import 'package:alfred_app/util/env.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -19,6 +21,7 @@ class LoginScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = useTranslations();
+    final obscurePassword = useState(true);
 
     final form = useForm(
       {
@@ -44,9 +47,12 @@ class LoginScreen extends HookConsumerWidget {
       onLoading: () => LoadingDialog.show(),
       onError: (e) {
         LoadingDialog.dismiss();
+        final message = e as DioError;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.toString()),
+            content: Text(
+              message.response?.data['error']['message'].toString() ?? '',
+            ),
             backgroundColor: AppColors.colorSemanticRed,
           ),
         );
@@ -117,7 +123,19 @@ class LoginScreen extends HookConsumerWidget {
                       padding: const EdgeInsets.only(bottom: 16),
                       child: ReactiveTextField(
                         formControlName: 'password',
+                        obscureText: obscurePassword.value,
                         decoration: InputDecoration(
+                          suffix: IconButton(
+                            onPressed: () {
+                              obscurePassword.value = !obscurePassword.value;
+                            },
+                            icon: Icon(
+                              obscurePassword.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.white,
+                            ),
+                          ),
                           labelText: t.password,
                           border: const UnderlineInputBorder(
                             borderSide: BorderSide(

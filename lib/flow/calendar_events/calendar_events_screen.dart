@@ -92,6 +92,7 @@ class CalendarEventsScreen extends HookConsumerWidget {
                         event: event,
                         onEventTap: handleEventTapped,
                       ),
+                    const SizedBox(height: 64),
                   ],
                 ),
               ],

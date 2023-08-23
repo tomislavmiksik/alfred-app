@@ -7,6 +7,7 @@ import 'package:alfred_app/hooks/form_hook.dart';
 import 'package:alfred_app/hooks/translation_hook.dart';
 import 'package:alfred_app/navigation/app_router.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -56,9 +57,12 @@ class RegisterScreen extends HookConsumerWidget {
       onLoading: () => LoadingDialog.show(),
       onError: (e) {
         LoadingDialog.dismiss();
+        final message = e as DioError;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.toString()),
+            content: Text(
+              message.response?.data['error']['message'].toString() ?? '',
+            ),
             backgroundColor: AppColors.colorSemanticRed,
           ),
         );
